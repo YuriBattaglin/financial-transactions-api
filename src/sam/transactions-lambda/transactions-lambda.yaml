@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Template for create-transaction Lambda function with LocalStack configuration
+
+Resources:
+  CreateTransactionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: create-transaction
+      Handler: create-transaction.handler
+      Runtime: nodejs14.x
+      Timeout: 30
+      MemorySize: 128
+      Role: arn:aws:iam::000000000000:role/any-role
+      Environment:
+        Variables:
+          TRANSACTIONS_TABLE: Transactions
+          SQS_QUEUE_URL: http://localstack:4566/000000000000/transactions-queue
+      CodeUri: .src/modules/transactions/lambdas/
+      Metadata:
+        BuildMethod: esbuild
+        BuildProperties:
+          Minify: true
+          Target: es2020
+          Sourcemap: true
+          EntryPoints:
+            - src/modules/transactions/lambdas/create-transaction.ts
+          Loader:
+            - '.ts=ts'
+          Format: esm

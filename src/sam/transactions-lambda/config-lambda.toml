@@ -1,0 +1,17 @@
+version = 0.1
+
+[default.deploy.parameters]
+stack_name = "transactions-lambda"
+resolve_s3 = true
+s3_prefix = "transactions-lambda"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+parameter_overrides = ""
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-lambda"
+
+[default.deploy.parameters.config_env]
+aws_access_key_id = "test"
+aws_secret_access_key = "test"
+region = "us-east-1"
+endpoint_url = "http://localhost:4566"

@@ -1,0 +1,14 @@
+version = 0.1
+
+[default.global.parameters]
+aws_access_key_id = "test"
+aws_secret_access_key = "test"
+region = "us-east-1"
+endpoint_url = "http://localhost:4566"
+
+[default.deploy.parameters]
+stack_name = "transactions-sqs"
+s3_bucket = "localstack-bucket"
+s3_prefix = "sam"
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true

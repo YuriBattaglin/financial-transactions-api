@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Resources:
+  TransactionsDynamoDB:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      TableName: Transactions
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+        - AttributeName: GSI01PK
+          AttributeType: S
+        - AttributeName: GSI01SK
+          AttributeType: S
+      KeySchema:
+        - KeyType: HASH
+          AttributeName: PK
+        - KeyType: RANGE
+          AttributeName: SK
+      GlobalSecondaryIndexes:
+        - IndexName: GSI01
+          KeySchema:
+            - AttributeName: GSI01PK
+              KeyType: HASH
+            - AttributeName: GSI01SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      
+
+Outputs:
+  TransactionsTableArn:
+    Description: DynamoDB - Transactions Table
+    Value: !GetAtt TransactionsDynamoDB.Arn
+    Export:
+      Name: TransactionsTableArn
+  TransactionsTableName:
+    Description: DynamoDB - Transactions Table
+    Value: !Ref TransactionsDynamoDB
+    Export:
+      Name: TransactionsTableName

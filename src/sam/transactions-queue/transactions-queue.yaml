@@ -1,0 +1,54 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Resources:
+  TransactionsQueue:
+    Type: "AWS::SQS::Queue"
+    Properties:
+      QueueName: "TransactionsQueue"
+      VisibilityTimeout: 30
+      MessageRetentionPeriod: 1209600  # 14 dias em segundos
+      DelaySeconds: 0
+      ReceiveMessageWaitTimeSeconds: 0
+      Tags:
+        - Key: "Environment"
+          Value: "Development"
+        - Key: "Project"
+          Value: "FinancialTransactions"
+
+  DeadLetterQueue:
+    Type: "AWS::SQS::Queue"
+    Properties:
+      QueueName: "TransactionsDLQ"
+      MessageRetentionPeriod: 1209600  # 14 dias em segundos
+
+  QueuePolicy:
+    Type: "AWS::SQS::QueuePolicy"
+    Properties:
+      Queues:
+        - !Ref TransactionsQueue
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal: "*"
+            Action: "sqs:SendMessage"
+            Resource: !GetAtt TransactionsQueue.Arn
+
+Outputs:
+  TransactionsQueueURL:
+    Description: "URL SQS Queue"
+    Value: !Ref TransactionsQueue
+    Export:
+      Name: "TransactionsQueueURL"
+
+  TransactionsQueueARN:
+    Description: "ARN SQS Queue"
+    Value: !GetAtt TransactionsQueue.Arn
+    Export:
+      Name: "TransactionsQueueARN"
+
+  DeadLetterQueueURL:
+    Description: "URL DLQ Queue"
+    Value: !Ref DeadLetterQueue
+    Export:
+      Name: "DeadLetterQueueURL"
