@@ -23,10 +23,10 @@ A complete serverless solution for managing financial transactions, leveraging A
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js
-- npm
-- Docker Desktop
-- AWS CLI
+- Node.js (https://nodejs.org/en/download)
+- npm (https://docs.npmjs.com/)
+- Docker Desktop (https://docs.docker.com/engine/install/)
+- AWS CLI (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 ## 🏃 Running the Project
 
