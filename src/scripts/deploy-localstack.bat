@@ -10,6 +10,10 @@ set "ENDPOINT=http://localhost:4566"
 set "REGION=us-east-1"
 set "ROLE_ARN=arn:aws:iam::000000000000:role/any-role"
 
+aws configure set aws_access_key_id test
+aws configure set aws_secret_access_key test
+aws configure set region us-east-1
+
 echo [1/7] Creating queue SQS...
 aws --endpoint-url=%ENDPOINT% cloudformation deploy ^
   --template-file "%PROJECT_PATH%\src\sam\transactions-queue\transactions-queue.yaml" ^
