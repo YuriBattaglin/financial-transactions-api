@@ -68,7 +68,7 @@ Make sure Docker is running on your computer before proceeding.
 docker-compose up --build
 ```
 
-### Deploy AWS Infrastructure aqui precisa mandar entrar na parta src/scripts e depois rodar
+### Deploy AWS Infrastructure
 Run the script after LocalStack is fully running (wait for health checks):
 ```bash
 cd src/scripts
