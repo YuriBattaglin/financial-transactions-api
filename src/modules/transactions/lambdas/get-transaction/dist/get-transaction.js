@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
 const aws_sdk_1 = require("aws-sdk");
 const dynamoDB = new aws_sdk_1.DynamoDB.DocumentClient({
-    region: process.env.AWS_REGION || 'us-east-1',
-    endpoint: process.env.AWS_ENDPOINT || 'http://host.docker.internal:4566'
+    region: process.env.AWS_REGION,
+    endpoint: process.env.AWS_ENDPOINT
 });
 const handler = async (event) => {
     try {
@@ -12,7 +12,6 @@ const handler = async (event) => {
             TableName: process.env.DYNAMODB_TABLE || 'Transactions',
             Key: {
                 PK: `TRANSACTION#${event.id}`,
-                SK: 'METADATA'
             }
         };
         const result = await dynamoDB.get(params).promise();
