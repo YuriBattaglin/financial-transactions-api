@@ -63,13 +63,15 @@ npm run start:dev
 ```
 
 ### Start LocalStack Services (Docker) (It's necessary to use Lambda, DynamoDB, and SQS)
+Make sure Docker is running on your computer before proceeding.
 ```bash
 docker-compose up --build
 ```
 
-### Deploy AWS Infrastructure
+### Deploy AWS Infrastructure aqui precisa mandar entrar na parta src/scripts e depois rodar
 Run the script after LocalStack is fully running (wait for health checks):
 ```bash
+cd src/scripts
 .\deploy-localstack.bat
 ```
 
