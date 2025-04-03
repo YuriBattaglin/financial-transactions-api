@@ -1,5 +1,5 @@
 <p align="center">
-    <img style="border-radius: 10px;" src="image.png" width="150px" height="100%" alt="Image" />
+    <img style="border-radius: 10px;" src="images/money.png" width="150px" height="100%" alt="Image" />
 </p>
 <h1 align="center" style="margin: 0; padding: 0;">Financial Transactions API </h1>
 
@@ -77,6 +77,11 @@ Run the script after LocalStack is fully running (wait for health checks):
 
 Open in your browser:
 http://localhost:3000/docs/
+
+## 🔍 Lambda function create-transaction dyagram:
+<p align="center">
+    <img style="border-radius: 10px;" src="images/postTransactionDyagram.jpg" width="100%" height="100%" alt="Image" />
+</p>
 
 ## 🚨 Extra Notes:
 
