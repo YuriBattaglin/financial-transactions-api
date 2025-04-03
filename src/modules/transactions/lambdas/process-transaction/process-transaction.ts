@@ -1,12 +1,12 @@
 import { SQSHandler } from 'aws-lambda';
 import AWS from 'aws-sdk';
 
-const localstackEndpoint = process.env.AWS_ENDPOINT || 'http://host.docker.internal:4566';
+const localstackEndpoint = process.env.AWS_ENDPOINT;
 const awsConfig = {
-  region: process.env.AWS_REGION || 'us-east-1',
+  region: process.env.AWS_REGION,
   endpoint: localstackEndpoint,
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'test',
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || 'test'
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY 
 };
 
 const dynamoDB = new AWS.DynamoDB.DocumentClient(awsConfig);
@@ -37,6 +37,7 @@ async function updateTransactionStatus(transactionId: string, status: string) {
     TableName: 'Transactions',
     Key: {
       PK: `TRANSACTION#${transactionId}`,
+      SK: 'METADATA'
     },
     UpdateExpression: 'SET #status = :status',
     ExpressionAttributeNames: {

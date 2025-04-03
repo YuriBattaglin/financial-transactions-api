@@ -12,6 +12,7 @@ export const handler = async (event: { id: string }): Promise<any> => {
       TableName: process.env.DYNAMODB_TABLE || 'Transactions',
       Key: {
         PK: `TRANSACTION#${event.id}`,
+        SK: 'METADATA'
       }
     };
 

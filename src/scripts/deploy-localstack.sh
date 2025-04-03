@@ -54,6 +54,7 @@ aws --endpoint-url="$ENDPOINT" lambda create-function \
 echo "[4/7] Creating Lambda process-transaction..."
 aws --endpoint-url="$ENDPOINT" lambda create-function \
   --function-name process-transaction \
+  --runtime nodejs14.x \
   --handler process-transaction.handler \
   --role "$ROLE_ARN" \
   --zip-file "fileb://$PROJECT_PATH/src/modules/transactions/lambdas/process-transaction/lambda-deploy.zip" \
