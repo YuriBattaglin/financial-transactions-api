@@ -81,6 +81,71 @@ cd src/scripts
 Open in your browser:
 http://localhost:3000/docs/
 
+### 📡 API Usage Examples
+
+### Create a New Transaction
+```http
+POST http://localhost:3000/transactions
+Content-Type: application/json
+Body:
+{
+  "amount": 100.5,
+  "type": "credit",
+  "sourceAccount": "ACC123456",
+  "destinationAccount": "ACC654321",
+  "metadata": {
+    "description": "Monthly payment"
+  }
+}
+```
+
+### Get transaction by ID
+```http
+GET http://localhost:3000/transactions](http://localhost:3000/transactions/e5j065uw39b4oez3opsjug
+Response:
+    {
+        "id": "e5j065uw39b4oez3opsjug",
+        "amount": 100.5,
+        "metadata": {
+            "description": "Monthly payment"
+        },
+        "sourceAccount": "ACC123456",
+        "type": "credit",
+        "destinationAccount": "ACC654321",
+        "status": "completed",
+        "timestamp": "2025-04-03T17:33:03.981Z"
+    }
+```
+
+### Get transaction by period
+```http
+GET http://localhost:3000/transactions?startDate=2023-01-01T00:00:00Z&endDate=2026-01-31T23:59:59Z
+Response:
+    [
+        {
+            "id": "e5j065uw39b4oez3opsjug",
+            "amount": 100.5,
+            "type": "credit",
+            "sourceAccount": "ACC123456",
+            "destinationAccount": "ACC654321",
+            "timestamp": "2025-04-03T17:33:03.981Z",
+            "status": "completed",
+            "metadata": {
+                "description": "Monthly payment"
+            }
+        }
+    ]
+```
+
+### Get transaction status by ID 
+```http
+GET http://localhost:3000/transactions/e5j065uw39b4oez3opsjug/status
+Response:
+    {
+        "status": "completed"
+    }
+```
+
 ### POST Transaction dyagram:
 <p align="center">
     <img style="border-radius: 10px;" src="images/postTransactionDyagram.jpg" width="100%" height="100%" alt="Image" />
