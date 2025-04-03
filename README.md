@@ -73,17 +73,18 @@ Run the script after LocalStack is fully running (wait for health checks):
 .\deploy-localstack.bat
 ```
 
-## 🔍 Documentation:
+## 📚 System Overview:
 
+### 📄 API Documentation
 Open in your browser:
 http://localhost:3000/docs/
 
-## 🔍 POST Transaction dyagram:
+### 🔄 POST Transaction dyagram:
 <p align="center">
     <img style="border-radius: 10px;" src="images/postTransactionDyagram.jpg" width="100%" height="100%" alt="Image" />
 </p>
 
-## 🚨 Extra Notes:
+### 🚨 Extra Notes:
 
 For the project to function correctly, you must run two components simultaneously: the Node.js API server and LocalStack via Docker. The Node.js server handles HTTP requests, provides API documentation, and forwards calls to Lambda functions. Meanwhile, LocalStack emulates AWS services, hosting the Lambda functions for business logic, SQS queues for message processing, DynamoDB for data storage, and CloudFormation for infrastructure management. While the Node.js server provides the API interface, LocalStack runs the services that actually process the transactions.
 
