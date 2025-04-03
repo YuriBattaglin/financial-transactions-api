@@ -1,5 +1,5 @@
 <p align="center">
-    <img style="border-radius: 10px;" src="imagem.png" width="150px" height="100%" alt="Image" />
+    <img style="border-radius: 10px;" src="image.png" width="150px" height="100%" alt="Image" />
 </p>
 <h1 align="center" style="margin: 0; padding: 0;">Financial Transactions API </h1>
 
