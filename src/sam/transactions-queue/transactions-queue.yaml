@@ -15,12 +15,6 @@ Resources:
         - Key: "Project"
           Value: "FinancialTransactions"
 
-  DeadLetterQueue:
-    Type: "AWS::SQS::Queue"
-    Properties:
-      QueueName: "TransactionsDLQ"
-      MessageRetentionPeriod: 1209600  # 14 dias em segundos
-
   QueuePolicy:
     Type: "AWS::SQS::QueuePolicy"
     Properties:
@@ -46,9 +40,3 @@ Outputs:
     Value: !GetAtt TransactionsQueue.Arn
     Export:
       Name: "TransactionsQueueARN"
-
-  DeadLetterQueueURL:
-    Description: "URL DLQ Queue"
-    Value: !Ref DeadLetterQueue
-    Export:
-      Name: "DeadLetterQueueURL"

@@ -13,7 +13,6 @@ import {
 import { TransactionsService } from './transactions.service';
 import { Transaction } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { TransactionStatusDto } from './dto/transaction-status.dto';
 
 @ApiTags('Transactions')
 @Controller('transactions')
@@ -94,12 +93,14 @@ export class TransactionsController {
   @ApiResponse({ 
     status: 200, 
     description: 'Transaction status',
-    type: TransactionStatusDto
+    schema: {
+      example: { status: 'completed' }
+    }
   })
   @ApiNotFoundResponse({ 
     description: 'Transaction not found'
   })
-  async findStatus(@Param('id') id: string): Promise<TransactionStatusDto> {
+  async findStatus(@Param('id') id: string): Promise<{ status: string }> {
     return this.transactionsService.findStatus(id);
   }
 

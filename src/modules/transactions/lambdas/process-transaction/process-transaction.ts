@@ -37,7 +37,6 @@ async function updateTransactionStatus(transactionId: string, status: string) {
     TableName: 'Transactions',
     Key: {
       PK: `TRANSACTION#${transactionId}`,
-      SK: 'METADATA'
     },
     UpdateExpression: 'SET #status = :status',
     ExpressionAttributeNames: {

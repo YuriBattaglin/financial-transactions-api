@@ -1,8 +1,7 @@
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { Transaction } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { LambdaService } from 'src/providers/lambda/lambda.service';
-import { TransactionStatusDto } from './dto/transaction-status.dto';
+import { LambdaService } from '../../providers/lambda/lambda.service';
 
 @Injectable()
 export class TransactionsService {
@@ -77,10 +76,17 @@ export class TransactionsService {
     }
   }
 
-  async findByPeriod(
-    startDate: string,
-    endDate: string
-  ): Promise<Transaction[]> {
+  async findByPeriod(startDate: string, endDate: string): Promise<Transaction[]> {
+    const isoUtcRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/;
+    
+    if (!isoUtcRegex.test(startDate)) {
+      throw new BadRequestException('startDate must be in ISO format (e.g., 2023-01-01T00:00:00Z)');
+    }
+    
+    if (!isoUtcRegex.test(endDate)) {
+      throw new BadRequestException('endDate must be in ISO format (e.g., 2023-01-01T00:00:00Z)');
+    }
+  
     try {
       const response = await this.lambdaService.invokeFunction(
         'get-transactions-by-period',
@@ -99,7 +105,7 @@ export class TransactionsService {
     }
   }
 
-  async findStatus(id: string): Promise<TransactionStatusDto> {
+  async findStatus(id: string): Promise<{ status: string }> {
     const transaction = await this.findOne(id); 
     return { status: transaction.status }; 
   }

@@ -1,11 +1,11 @@
 const AWSCreateLambda = require('aws-sdk');
 
-const localstackEndpoint = process.env.AWS_ENDPOINT || 'http://host.docker.internal:4566';
+const localstackEndpoint = process.env.AWS_ENDPOINT;
 
 const awsConfig = {
-  region: process.env.AWS_REGION || 'us-east-1',
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'test',
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || 'test',
+  region: process.env.AWS_REGION,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   s3ForcePathStyle: true,
   endpoint: localstackEndpoint,
   maxRetries: 3,

@@ -1,8 +1,8 @@
 import { DynamoDB } from 'aws-sdk';
 
 const dynamoDB = new DynamoDB.DocumentClient({
-  region: process.env.AWS_REGION || 'us-east-1',
-  endpoint: process.env.AWS_ENDPOINT || 'http://host.docker.internal:4566'
+  region: process.env.AWS_REGION,
+  endpoint: process.env.AWS_ENDPOINT
 });
 
 export const handler = async (event: { id: string }): Promise<any> => {
@@ -12,7 +12,6 @@ export const handler = async (event: { id: string }): Promise<any> => {
       TableName: process.env.DYNAMODB_TABLE || 'Transactions',
       Key: {
         PK: `TRANSACTION#${event.id}`,
-        SK: 'METADATA'
       }
     };
 
