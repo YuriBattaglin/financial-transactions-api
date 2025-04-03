@@ -26,6 +26,8 @@ A complete serverless solution for financial transactions management using AWS s
 - npm
 - Docker Desktop
 
+## 🏃 Running the Project
+
 ### Installation
 ```bash
 # Clone repository
@@ -36,3 +38,28 @@ cd financial-transactions-api
 
 # Install dependencies
 npm install
+```
+
+### Start API Server
+```bash
+# Production mode
+npm run start
+
+# Development mode (with live reload)
+npm run start:dev
+```
+
+### Start LocalStack Services (Docker) (It's necessary to use Lambda, DynamoDB, and SQS)
+```bash
+docker-compose up --build
+```
+
+### Deploy AWS Infrastructure
+Run the script after LocalStack is fully running (wait for health checks):
+```bash
+.\deploy-localstack.bat
+```
+
+### Access API Documentation
+Open in your browser:
+http://localhost:3000/docs/
