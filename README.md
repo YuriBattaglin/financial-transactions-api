@@ -5,7 +5,6 @@ A complete serverless solution for financial transactions management using AWS s
 ## 🌟 Features
 
 - Transaction creation and processing
-- Time-based transaction queries
 - Event-driven architecture
 - Full local development environment
 - Comprehensive API documentation
