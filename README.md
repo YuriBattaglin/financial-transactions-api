@@ -78,7 +78,7 @@ Run the script after LocalStack is fully running (wait for health checks):
 Open in your browser:
 http://localhost:3000/docs/
 
-## 🔍 Lambda function create-transaction dyagram:
+## 🔍 POST Transaction dyagram:
 <p align="center">
     <img style="border-radius: 10px;" src="images/postTransactionDyagram.jpg" width="100%" height="100%" alt="Image" />
 </p>
