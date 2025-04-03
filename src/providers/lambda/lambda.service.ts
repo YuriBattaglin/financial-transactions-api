@@ -31,14 +31,9 @@ export class LambdaService {
 
   async invokeFunction(functionName: string, payload: any): Promise<any> {
     try {
-        const enhancedPayload = {
-            transactionData: payload,
-        };
-
-        // Serialização correta do payload
         const input: InvokeCommandInput = {
             FunctionName: functionName,
-            Payload: JSON.stringify(enhancedPayload),
+            Payload: JSON.stringify(payload),
         };
 
         const command = new InvokeCommand(input);
@@ -48,10 +43,8 @@ export class LambdaService {
             throw new Error('Lambda response payload is empty');
         }
 
-        // Desserialização correta da resposta
         const payloadString = new TextDecoder().decode(response.Payload);
         const result = JSON.parse(payloadString);
-        console.log(result);
 
         if (response.FunctionError) {
             throw new Error(result.errorMessage || 'Lambda function error');
@@ -59,7 +52,6 @@ export class LambdaService {
 
         return result;
     } catch (error) {
-        console.error('Lambda invocation error:', error);
         throw new Error(`Failed to invoke Lambda function: ${error.message}`);
     }
 }

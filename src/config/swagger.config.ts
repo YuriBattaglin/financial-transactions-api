@@ -15,6 +15,6 @@ export function setupSwagger(app: INestApplication) {
       operationsSorter: 'alpha',
       docExpansion: 'none', 
     },
-    customSiteTitle: 'AWS Services API Documentation',
+    customSiteTitle: 'Financial Transactions API Documentation',
   });
 }

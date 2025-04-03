@@ -37,7 +37,7 @@ exports.handler = async (event) => {
       };
     }
 
-    const dbResponse = await dynamoDBCreateLambda.put({
+    await dynamoDBCreateLambda.put({
       TableName: 'Transactions',
       Item: {
         ...transactionData,
@@ -45,7 +45,7 @@ exports.handler = async (event) => {
       ConditionExpression: 'attribute_not_exists(PK)'
     }).promise();
 
-    const sqsResponse = await sqsCreateLambda.sendMessage({
+    await sqsCreateLambda.sendMessage({
       QueueUrl: process.env.SQS_QUEUE_URL || `${localstackEndpoint}/000000000000/TransactionsQueue`,
       MessageBody: JSON.stringify({
         transactionId: transactionData.id,
@@ -66,21 +66,18 @@ exports.handler = async (event) => {
       statusCode: 201,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
-        success: true,
-        transactionId: transactionData.id,
-        dynamoResult: dbResponse,
-        sqsResult: sqsResponse
+        id: transactionData.id,
+        amount: transactionData.amount,
+        type: transactionData.type,
+        sourceAccount: transactionData.sourceAccount,
+        destinationAccount: transactionData.destinationAccount,
+        timestamp: transactionData.timestamp,
+        status: transactionData.status,
+        metadata: transactionData.metadata || {}
       })
     };
 
   } catch (error) {
-    console.error('Full error:', {
-      message: error.message,
-      stack: error.stack,
-      code: error.code,
-      raw: error
-    });
-
     return {
       statusCode: error.code === 'ConditionalCheckFailedException' ? 409 : 500,
       body: JSON.stringify({ 

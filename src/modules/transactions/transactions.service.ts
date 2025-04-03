@@ -1,7 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { Transaction } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { LambdaService } from 'src/providers/lambda/lambda.service';
+import { TransactionStatusDto } from './dto/transaction-status.dto';
 
 @Injectable()
 export class TransactionsService {
@@ -29,20 +30,24 @@ export class TransactionsService {
       status: 'pending',              
       PK: `TRANSACTION#${id}`,  
       SK: 'METADATA',               
-      GSI01PK: `TYPE#${transaction.type}`,     
+      GSI01PK: `TRANSACTION`,     
       GSI01SK: timeStamp      
     };
+
+    const enhancedPayload = {
+      transactionData: transactionPayload,
+  };
 
     try {
       const response = await this.lambdaService.invokeFunction(
         'create-transaction',
-        transactionPayload
+        enhancedPayload
       );
       if (response.error) {
         throw new Error(response.error);
       }
 
-      return response.body;
+      return JSON.parse(response.body);
     } catch (error) {
       throw new Error(`Failed to create transaction: ${error.message}`);
     }
@@ -54,18 +59,49 @@ export class TransactionsService {
         'get-transaction',
         { id }
       );
-
-      if (!response.transaction) {
+  
+      if (response.statusCode === 404) {
         throw new NotFoundException(`Transaction with ID ${id} not found`);
       }
-
-      return response.transaction;
+  
+      if (response.statusCode !== 200) {
+        throw new Error(response.body?.error || 'Failed to fetch transaction');
+      }
+  
+      return JSON.parse(response.body).transaction;
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new Error(`Failed to fetch transaction: ${error.message}`);
+      throw new InternalServerErrorException(`Failed to fetch transaction: ${error.message}`);
     }
+  }
+
+  async findByPeriod(
+    startDate: string,
+    endDate: string
+  ): Promise<Transaction[]> {
+    try {
+      const response = await this.lambdaService.invokeFunction(
+        'get-transactions-by-period',
+        { startDate, endDate }
+      );
+  
+      if (response.statusCode !== 200) {
+        throw new Error(response.body?.error || 'Failed to fetch transactions');
+      }
+  
+      return JSON.parse(response.body).transactions;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        `Failed to fetch transactions by period: ${error.message}`
+      );
+    }
+  }
+
+  async findStatus(id: string): Promise<TransactionStatusDto> {
+    const transaction = await this.findOne(id); 
+    return { status: transaction.status }; 
   }
 
   private generateId(): string {

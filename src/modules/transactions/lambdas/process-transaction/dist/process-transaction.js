@@ -20,18 +20,15 @@ const handler = async (event) => {
             const { transactionId } = message;
             await updateTransactionStatus(transactionId, 'processing');
             try {
-                console.log(`Processing transaction ${transactionId}`);
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                await new Promise(resolve => setTimeout(resolve, 8000));
                 await updateTransactionStatus(transactionId, 'completed');
             }
             catch (error) {
                 await updateTransactionStatus(transactionId, 'failed');
-                console.error(`Failed to process transaction ${transactionId}:`, error);
             }
         }
     }
     catch (error) {
-        console.error('Error processing SQS messages:', error);
         throw error;
     }
 };
@@ -43,13 +40,12 @@ async function updateTransactionStatus(transactionId, status) {
             PK: `TRANSACTION#${transactionId}`,
             SK: 'METADATA'
         },
-        UpdateExpression: 'SET #status = :status, updatedAt = :now',
+        UpdateExpression: 'SET #status = :status',
         ExpressionAttributeNames: {
             '#status': 'status'
         },
         ExpressionAttributeValues: {
-            ':status': status,
-            ':now': new Date().toISOString()
+            ':status': status
         },
         ReturnValues: 'UPDATED_NEW'
     };
