@@ -91,8 +91,6 @@ Run transactions service and controller tests
 npm test
 ```
 
-### 📡 API Usage Examples
-
 ### Create a New Transaction
 ```http
 POST http://localhost:3000/transactions
