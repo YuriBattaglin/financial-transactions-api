@@ -81,6 +81,12 @@ cd src/scripts
 Open in your browser:
 http://localhost:3000/docs/
 
+### Running Tests
+Run transactions service and controller tests
+```
+npm test
+```
+
 ### 📡 API Usage Examples
 
 ### Create a New Transaction
