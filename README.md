@@ -81,6 +81,10 @@ cd src/scripts
 Open in your browser:
 http://localhost:3000/docs/
 
+### 🌐 LocalStack Web UI
+Open in your browser if you want to see the running services
+https://app.localstack.cloud/
+
 ### Running Tests
 Run transactions service and controller tests
 ```
