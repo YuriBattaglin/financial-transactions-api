@@ -33,11 +33,12 @@ export const handler: SQSHandler = async (event) => {
 };
 
 async function updateTransactionStatus(transactionId: string, status: string) {
+
   const params = {
     TableName: 'Transactions',
     Key: {
-      PK: `TRANSACTION#${transactionId}`,
-      SK: 'METADATA'
+      PK: `TRANSACTIONS`,
+      SK: `ID#${transactionId}`
     },
     UpdateExpression: 'SET #status = :status',
     ExpressionAttributeNames: {

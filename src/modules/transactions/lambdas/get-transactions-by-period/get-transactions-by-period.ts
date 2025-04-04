@@ -41,8 +41,8 @@ export const handler = async (event: {
       },
       ExpressionAttributeValues: {
         ':pk': 'TRANSACTION', 
-        ':start': start.toISOString(),
-        ':end': end.toISOString()
+        ':start': `TIMESTAMP#${start.toISOString()}`,
+        ':end': `TIMESTAMP#${end.toISOString()}`
       },
       ScanIndexForward: false 
     };
@@ -50,7 +50,7 @@ export const handler = async (event: {
     const result = await dynamoDB.query(params).promise();
 
     const transactions = result.Items?.map(item => ({
-      id: item.PK.replace('TRANSACTION#', ''),
+      id: item.SK.replace('ID#', ''),
       amount: item.amount,
       type: item.type,
       sourceAccount: item.sourceAccount,

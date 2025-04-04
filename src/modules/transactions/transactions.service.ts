@@ -27,10 +27,10 @@ export class TransactionsService {
       id: id,          
       timestamp: timeStamp,  
       status: 'pending',              
-      PK: `TRANSACTION#${id}`,  
-      SK: 'METADATA',               
+      PK: `TRANSACTIONS`,  
+      SK: `ID#${id}`,
       GSI01PK: `TRANSACTION`,     
-      GSI01SK: timeStamp      
+      GSI01SK: `TIMESTAMP#${timeStamp}`,       
     };
 
     const enhancedPayload = {

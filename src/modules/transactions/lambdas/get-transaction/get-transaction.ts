@@ -11,8 +11,8 @@ export const handler = async (event: { id: string }): Promise<any> => {
     const params = {
       TableName: process.env.DYNAMODB_TABLE || 'Transactions',
       Key: {
-        PK: `TRANSACTION#${event.id}`,
-        SK: 'METADATA'
+        PK: `TRANSACTIONS`,
+        SK: `ID#${event.id}`,
       }
     };
 
@@ -29,11 +29,7 @@ export const handler = async (event: { id: string }): Promise<any> => {
 
     const transaction = {
       id: event.id,
-      ...result.Item,
-      PK: undefined,
-      SK: undefined,
-      GSI01PK: undefined,
-      GSI01SK: undefined
+      ...result.Item
     };
 
     return {
