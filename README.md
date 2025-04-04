@@ -46,11 +46,11 @@ npm install
 ```bash
 NODE_ENV=development
 LOCALSTACK_ENDPOINT=http://localhost:4566
-AWS_ENDPOINT=http://host.docker.internal:4566 #Para LINUX ou WSL usar http://172.17.0.1:4566
+AWS_ENDPOINT=http://host.docker.internal:4566 #For LINUX or WSL use http://172.17.0.1:4566
 AWS_ACCESS_KEY_ID=test
 AWS_SECRET_ACCESS_KEY=test
 AWS_REGION=us-east-1
-SQS_QUEUE_URL=http://host.docker.internal:4566/000000000000/TransactionsQueue #Para LINUX ou WSL usar http://172.17.0.1:4566
+SQS_QUEUE_URL=http://host.docker.internal:4566/000000000000/TransactionsQueue #For LINUX or WSL use http://172.17.0.1:4566
 ```
 
 ### Start API Server
